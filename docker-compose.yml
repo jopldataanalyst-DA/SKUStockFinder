@@ -1,10 +1,8 @@
 services:
   backend:
     build: ./backend
-    ports:
-      - "3001:3001"
+    restart: unless-stopped
     environment:
-      PORT: "3001"
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT}
       DB_USER: ${DB_USER}
@@ -17,7 +15,8 @@ services:
       UNICOMMERCE_FACILITIES: ${UNICOMMERCE_FACILITIES}
       FETCH_INTERVAL_MINUTES: ${FETCH_INTERVAL_MINUTES}
       CORS_ORIGINS: ${CORS_ORIGINS}
-    restart: unless-stopped
+    ports:
+      - "3001:3001"
 
   frontend:
     build:
@@ -26,10 +25,8 @@ services:
         VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
         VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
         VITE_API_URL: ${VITE_API_URL}
-    ports:
-      - "3002:3002"
-    environment:
-      PORT: "3002"
     restart: unless-stopped
     depends_on:
       - backend
+    ports:
+      - "3002:80"
