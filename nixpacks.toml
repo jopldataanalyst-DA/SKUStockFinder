@@ -1,7 +1,7 @@
 providers = ["python", "node"]
 
 [variables]
-NIXPACKS_NODE_VERSION = "22"
+NIXPACKS_NODE_VERSION = "24"
 NPM_CONFIG_OMIT = ""
 NPM_CONFIG_PRODUCTION = "false"
 
