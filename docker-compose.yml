@@ -1,0 +1,35 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: "3001"
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      UNICOMMERCE_BASE_URL: ${UNICOMMERCE_BASE_URL}
+      UNICOMMERCE_CLIENT_ID: ${UNICOMMERCE_CLIENT_ID}
+      UNICOMMERCE_USERNAME: ${UNICOMMERCE_USERNAME}
+      UNICOMMERCE_PASSWORD: ${UNICOMMERCE_PASSWORD}
+      UNICOMMERCE_FACILITIES: ${UNICOMMERCE_FACILITIES}
+      FETCH_INTERVAL_MINUTES: ${FETCH_INTERVAL_MINUTES}
+      CORS_ORIGINS: ${CORS_ORIGINS}
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
+        VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
+        VITE_API_URL: ${VITE_API_URL}
+    ports:
+      - "3002:3002"
+    environment:
+      PORT: "3002"
+    restart: unless-stopped
+    depends_on:
+      - backend
