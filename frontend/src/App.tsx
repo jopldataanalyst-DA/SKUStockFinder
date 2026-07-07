@@ -120,10 +120,10 @@ function App() {
           <TableHeader className="sticky top-0 bg-background">
             <TableRow>
               <TableHead className="w-6" />
-              <TableHead>Item Type</TableHead>
               <TableHead>SKU Code</TableHead>
               <TableHead>Shelves</TableHead>
               <TableHead className="text-right">Total Quantity</TableHead>
+              <TableHead>Item Type</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -151,17 +151,17 @@ function App() {
                       <TableCell className="text-muted-foreground">
                         {isOpen ? "▾" : "▸"}
                       </TableCell>
-                      <TableCell title={group.item_type_name ?? undefined}>
-                        <div className="max-w-[420px] truncate">
-                          {group.item_type_name ?? "—"}
-                        </div>
-                      </TableCell>
                       <TableCell className="font-mono">
                         <div className="max-w-[180px] truncate">{group.sku_code}</div>
                       </TableCell>
                       <TableCell>{group.shelves.length}</TableCell>
                       <TableCell className="text-right font-semibold">
                         {group.totalQuantity}
+                      </TableCell>
+                      <TableCell title={group.item_type_name ?? undefined}>
+                        <div className="max-w-[420px] truncate">
+                          {group.item_type_name ?? "—"}
+                        </div>
                       </TableCell>
                     </TableRow>
                     {isOpen &&
@@ -171,11 +171,12 @@ function App() {
                         .map((row) => (
                           <TableRow key={row.id} className="bg-muted/30">
                             <TableCell />
-                            <TableCell colSpan={2} className="text-sm text-muted-foreground pl-6">
+                            <TableCell />
+                            <TableCell className="text-sm text-muted-foreground pl-6">
                               Shelf {row.shelf || "—"}
                             </TableCell>
-                            <TableCell />
                             <TableCell className="text-right">{row.quantity}</TableCell>
+                            <TableCell />
                           </TableRow>
                         ))}
                   </Fragment>
