@@ -1,8 +1,10 @@
 import logging
 import threading
+from pathlib import Path
 
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from . import db
 from .config import settings
@@ -54,3 +56,10 @@ def list_skus(q: str | None = Query(default=None), limit: int = Query(default=10
 def refresh() -> dict:
     count = run_fetch_job()
     return {"rows_upserted": count}
+
+
+# When the frontend build is bundled alongside the backend in a single
+# container, serve it here so one process handles both API and static assets.
+STATIC_DIR = Path(__file__).resolve().parent.parent / "static"
+if STATIC_DIR.exists():
+    app.mount("/", StaticFiles(directory=str(STATIC_DIR), html=True), name="static")
